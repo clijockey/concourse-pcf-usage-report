@@ -56,7 +56,7 @@ GetPCFUsageData.prototype.cfGetQuotas = function() {
   var cf_cmd = 'cf curl /v2/quota_definitions';
   console.log("Retrieving organization quota definitions");
   var currentGetPCFUsageDataObject = this;
-  exec(cf_cmd, {maxBuffer: 2048 * 2048 }, function(error, stdout, stderr) {
+  exec(cf_cmd, {maxBuffer: 1024 * 1024 }, function(error, stdout, stderr) {
     if (! currentGetPCFUsageDataObject.execError("cfGetQuotas",error,stderr)) {
       var quotasObject=JSON.parse(stdout, 'utf8');
       currentGetPCFUsageDataObject.orgsUsageObject.quota_definitions=quotasObject;
@@ -71,7 +71,7 @@ GetPCFUsageData.prototype.cfGetServices = function() {
   var cf_cmd = 'cf curl /v2/services';
   console.log("Retrieving services list");
   var currentGetPCFUsageDataObject = this;
-  exec(cf_cmd, {maxBuffer: 2048 * 2048 }, function(error, stdout, stderr) {
+  exec(cf_cmd, {maxBuffer: 1024 * 1024 }, function(error, stdout, stderr) {
     if (! currentGetPCFUsageDataObject.execError("cfGetServices",error,stderr)) {
       var parsedObject=JSON.parse(stdout, 'utf8');
       currentGetPCFUsageDataObject.orgsUsageObject.services=parsedObject;
@@ -187,7 +187,7 @@ GetPCFUsageData.prototype.cfGetOrgApplicationsUsage = function(orgIndex,orgGuid)
   var cf_cmd = 'curl "https://app-usage.'+process.env.PCF_APPS_DOMAIN+'/organizations/'+orgGuid+'/app_usages?start='+this.reportTimeRangeObject.USAGE_START_DATE+'&end='+this.reportTimeRangeObject.USAGE_END_DATE+'" -k -H "authorization: `cf oauth-token`"';
   // console.log("Command: "+cf_cmd);
   var currentGetPCFUsageDataObject = this;
-  exec(cf_cmd, function(error, stdout, stderr) {
+  exec(cf_cmd, {maxBuffer: 1024 * 1024 }, function(error, stdout, stderr) {
     if (! currentGetPCFUsageDataObject.execError("cfGetOrgApplicationsUsage",error,stderr)) {
       var parsedObject=JSON.parse(stdout, 'utf8');
       if (parsedObject.error) {
