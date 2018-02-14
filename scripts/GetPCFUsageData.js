@@ -56,7 +56,7 @@ GetPCFUsageData.prototype.cfGetQuotas = function() {
   var cf_cmd = 'cf curl /v2/quota_definitions';
   console.log("Retrieving organization quota definitions");
   var currentGetPCFUsageDataObject = this;
-  exec(cf_cmd, {maxBuffer: 500 * 1024 }, function(error, stdout, stderr) {
+  exec(cf_cmd, {maxBuffer: 1024 * 1024 }, function(error, stdout, stderr) {
     if (! currentGetPCFUsageDataObject.execError("cfGetQuotas",error,stderr)) {
       var quotasObject=JSON.parse(stdout, 'utf8');
       currentGetPCFUsageDataObject.orgsUsageObject.quota_definitions=quotasObject;
