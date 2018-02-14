@@ -17,7 +17,7 @@ GetPCFUsageData.prototype.execute = function() {
 };
 
 GetPCFUsageData.prototype.cfLogin = function() {
-  var cmd_login = 'cf api '+process.env.PCF_API_ENDPOINT+' --skip-ssl-validation && cf login -u '+process.env.SYS_ADMIN_USER+' -p '+process.env.SYS_ADMIN_PASSWORD+' -o '+process.env.PCF_ORG+' -s '+process.env.PCF_SPACE;
+  var cmd_login = 'cf api '+process.env.PCF_API_ENDPOINT+' --skip-ssl-validation && cf login -u '+process.env.SYS_ADMIN_USER+' -p '+process.env.SYS_ADMIN_PASSWORD+' -o "system" -s "system"';
   console.log("Issuing cf api and login commands");
   var currentGetPCFUsageDataObject = this;
   exec(cmd_login, function(error, stdout, stderr) {
